@@ -31,6 +31,19 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      describe "should render correct post count" do
+        it "with 2 post" do
+          expect(page).to have_content("2 microposts")
+        end
+        describe "with one post" do
+          before do
+            user.microposts.first.destroy!
+            visit root_path
+          end
+          it { should have_content("1 micropost") }
+        end
+      end
     end
   end
 
